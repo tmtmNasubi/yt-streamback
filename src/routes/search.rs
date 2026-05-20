@@ -8,10 +8,14 @@ pub async fn search(req: Request, ctx: RouteContext<()>) -> Result<Response> {
     let Some(video_id) = url
         .query_pairs()
         .find(|(key, _)| key == "video_id")
-        .map(|(_, value)| value.to_string())
+        .map(|(_, value)| value.trim().to_string())
     else {
         return Response::error("missing video_id", 400);
     };
+
+    if video_id.is_empty() {
+        return Response::error("video_id must not be empty", 400);
+    }
 
     let items = find_backlink(&video_id, &api_key)
         .await
