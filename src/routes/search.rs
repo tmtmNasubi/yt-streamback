@@ -1,5 +1,5 @@
-use worker::*;
 use crate::usecases::find_backlink::find_backlink;
+use worker::*;
 
 pub async fn search(req: Request, ctx: RouteContext<()>) -> Result<Response> {
     let url = req.url()?;

@@ -1,7 +1,7 @@
 use std::str;
 
-use reqwest::Client;
 use chrono::{DateTime, Utc};
+use reqwest::Client;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Deserialize)]
@@ -86,7 +86,7 @@ pub struct Thumbnail {
     pub height: Option<u32>,
 }
 
-pub async fn search_movies(query: &str, key: &str) -> Result<Vec<SearchResult>, reqwest::Error>  {
+pub async fn search_movies(query: &str, key: &str) -> Result<Vec<SearchResult>, reqwest::Error> {
     let client: Client = reqwest::Client::new();
     let res: YouTubeSearchListResponse = client
         .get("https://www.googleapis.com/youtube/v3/search")
