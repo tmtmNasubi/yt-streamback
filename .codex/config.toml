@@ -1,0 +1,6 @@
+# Codex local configuration for this repository.
+# Keep settings minimal and repository-scoped.
+
+[features]
+# Ensure nested AGENTS.md instructions are propagated clearly in child contexts.
+child_agents_md = true
