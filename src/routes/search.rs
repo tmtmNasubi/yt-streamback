@@ -13,8 +13,8 @@ pub async fn search(req: Request, ctx: RouteContext<()>) -> Result<Response> {
         return Response::error("missing video_id", 400);
     };
 
-    if video_id.is_empty() {
-        return Response::error("video_id must not be empty", 400);
+    if !is_video_id(&video_id) {
+        return Response::error("invalid video_id", 400);
     }
 
     let items = find_backlink(&video_id, &api_key)
@@ -22,4 +22,11 @@ pub async fn search(req: Request, ctx: RouteContext<()>) -> Result<Response> {
         .map_err(|e| Error::RustError(format!("failed to find backlinks: {e}")))?;
 
     Response::from_json(&items)
+}
+
+fn is_video_id(value: &str) -> bool {
+    value.len() == 11
+        && value
+            .bytes()
+            .all(|c| c.is_ascii_alphanumeric() || c == b'_' || c == b'-')
 }
